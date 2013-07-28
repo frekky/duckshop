@@ -6,7 +6,7 @@ import org.bukkit.block.Chest;
 import tk.allele.duckshop.DuckShop;
 import tk.allele.duckshop.errors.ChestProtectionException;
 import tk.allele.duckshop.errors.InvalidChestException;
-import tk.allele.inventory.Inventories;
+//import tk.allele.inventory.Inventories;
 
 /**
  * Extends the InventoryAdapter to support chests.

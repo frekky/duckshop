@@ -127,4 +127,39 @@ public class DummyEconomy implements Economy {
     public boolean createPlayerAccount(String s) {
         return true;
     }
+
+	@Override
+	public int fractionalDigits() {
+		return 0;
+	}
+
+	@Override
+	public boolean createPlayerAccount(String arg0, String arg1) {
+		return true;
+	}
+
+	@Override
+	public EconomyResponse depositPlayer(String arg0, String arg1, double arg2) {
+		return RESPONSE;
+	}
+
+	@Override
+	public double getBalance(String arg0, String arg1) {
+		return 0;
+	}
+
+	@Override
+	public boolean has(String arg0, String arg1, double arg2) {
+		return false;
+	}
+
+	@Override
+	public boolean hasAccount(String arg0, String arg1) {
+		return true;
+	}
+
+	@Override
+	public EconomyResponse withdrawPlayer(String arg0, String arg1, double arg2) {
+		return RESPONSE;
+	}
 }

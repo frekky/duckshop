@@ -3,6 +3,7 @@ package tk.allele.duckshop.listeners;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
+import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -46,6 +47,7 @@ public class DuckShopBlockListener implements Listener {
             // Science fiction allusions FTW
             event.setCancelled(true);
             playerPlus.error("I'm sorry, " + player.getName() + ". I'm afraid I can't do that.");
+            event.getBlock().getState().update();
         }
 
         if (sign != null) {
@@ -85,8 +87,20 @@ public class DuckShopBlockListener implements Listener {
                 }
             }
         } else if (state instanceof Chest) {
-            if (ChestLinkManager.getInstance(plugin).isChestConnected(block.getLocation())) {
-                playerPlus.warning("Warning: This chest is used by a DuckShop sign. The sign will no longer work unless the chest is replaced.");
+        	ChestLinkManager chestMan = ChestLinkManager.getInstance(plugin);
+        	if (state instanceof DoubleChest)
+        	{
+        		Chest lchest, rchest;
+        		DoubleChest dchest = (DoubleChest) state;
+        		lchest = (Chest) dchest.getLeftSide();
+        		rchest = (Chest) dchest.getRightSide();
+        		if (chestMan.isChestConnected(lchest.getLocation()) || chestMan.isChestConnected(rchest.getLocation())) event.setCancelled(true);
+        	}
+            if (chestMan.isChestConnected(block.getLocation())) 
+            {
+            	
+            	playerPlus.warning("Warning: This chest is used by a DuckShop sign. You have to break the sign before you can destroy this chest.");
+                event.setCancelled(true);
             }
         }
     }

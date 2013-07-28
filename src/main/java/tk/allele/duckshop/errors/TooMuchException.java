@@ -7,7 +7,12 @@ import tk.allele.duckshop.items.Item;
  * Thrown to indicate a player does not have enough space to store an item.
  */
 public class TooMuchException extends TradingException {
-    public TooMuchException(Player player, Item item) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1159061288166634273L;
+
+	public TooMuchException(Player player, Item item) {
         super(player, item);
     }
 }

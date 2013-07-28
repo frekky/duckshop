@@ -1,10 +1,10 @@
-name: ${pom.name}
+name: DuckShop
 main: tk.allele.duckshop.DuckShop
-version: ${pom.version}
-author: Chris Wong
+version: 34
+author: Chris Wong, Frekk van Blagh
 description: Create fully automated shops with signs!
 depend: [OddItem, Vault]
-softdepend: [LWC, Lockette, WorldGuard]
+softdepend: [LWC, Residence]
 
 commands:
     duckshop:

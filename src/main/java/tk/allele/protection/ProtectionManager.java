@@ -4,6 +4,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import tk.allele.protection.methods.LWCMethod;
+import tk.allele.protection.methods.ResidenceMethod;
 import tk.allele.protection.methods.LocketteMethod;
 import tk.allele.protection.methods.WorldGuardMethod;
 
@@ -21,6 +22,7 @@ public class ProtectionManager {
         // vvv Add methods below vvv
         registerMethod(new LocketteMethod(plugin));
         registerMethod(new LWCMethod(plugin));
+        registerMethod(new ResidenceMethod(plugin));
         registerMethod(new WorldGuardMethod(plugin));
         //registerMethod(new FailMethod()); // Testing only
         // ^^^ Add methods above ^^^

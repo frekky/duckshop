@@ -35,7 +35,7 @@ public class CommandDispatcher extends Command implements org.bukkit.command.Com
 
     @Override
     public void execute(CommandSenderPlus sender, CommandContext context) throws CommandException, PermissionsException {
-        Command command = commandMap.get(context.getArguments().get(0));
+    	Command command = commandMap.get(context.getArguments().get(0));
         if (command != null) {
             command.execute(sender, context.shift());
         } else {

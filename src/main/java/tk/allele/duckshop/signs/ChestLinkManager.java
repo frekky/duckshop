@@ -22,12 +22,14 @@ public class ChestLinkManager {
     private Logger log;
     private Map<Location, Location> chestLocations;
     private Map<Location, Boolean> chestIsConnected;
+    private Map<Location, Location> signLocations;
     private File propertiesFile;
 
     private ChestLinkManager(DuckShop plugin) {
         this.plugin = plugin;
         this.log = plugin.log;
         this.chestLocations = new HashMap<Location, Location>();
+        this.signLocations = new HashMap<Location, Location>();
         this.chestIsConnected = new HashMap<Location, Boolean>();
         this.propertiesFile = new File(plugin.getDataFolder(), CHESTS_FILE_NAME);
         load();
@@ -42,31 +44,47 @@ public class ChestLinkManager {
         }
         return instance;
     }
+    
+    /**
+     * Get the location of the Sign connected with a Chest.
+     * 
+     * @return a Location object or null if none exists
+     */
+    public Location getSignLocation(Location chestLocation)
+    {
+    	return signLocations.get(chestLocation);
+    }
 
     /**
      * Get the location of the Chest connected with a Sign.
      *
      * @return a Location object, or null if none can be found.
      */
-    public Location getChestLocation(Location signLocation) {
+    public Location getChestLocation(Location signLocation) 
+    {
         return chestLocations.get(signLocation);
     }
 
     /**
      * Set the location of the Chest connected with a Sign.
      */
-    public void setChestLocation(Location signLocation, Location chestLocation) {
+    public void setChestLocation(Location signLocation, Location chestLocation)
+    {
         chestLocations.put(signLocation, chestLocation);
         chestIsConnected.put(chestLocation, Boolean.TRUE);
+        signLocations.put(chestLocation, signLocation);
     }
 
     /**
      * Removes the location of the Chest connected with a Sign, if present.
      */
-    public void removeChestLocation(Location signLocation) {
+    public void removeChestLocation(Location signLocation) 
+    {
         Location chestLocation = getChestLocation(signLocation);
-        if (chestLocation != null) {
+        if (chestLocation != null)
+        {
             chestIsConnected.remove(chestLocation);
+            signLocations.remove(chestLocation);
         }
         chestLocations.remove(signLocation);
     }
@@ -74,7 +92,8 @@ public class ChestLinkManager {
     /**
      * Return whether a chest is connected to a sign.
      */
-    public boolean isChestConnected(Location chestLocation) {
+    public boolean isChestConnected(Location chestLocation) 
+    {
         return chestIsConnected.containsKey(chestLocation);
     }
 
@@ -95,10 +114,14 @@ public class ChestLinkManager {
             // Parse each entry and record it in the map
             int entriesLoaded = 0;
             for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-                Location signLocation = Locations.parseLocation(plugin.getServer(), (String) entry.getKey());
-                Location chestLocation = Locations.parseLocation(plugin.getServer(), (String) entry.getValue());
-                setChestLocation(signLocation, chestLocation);
-                ++entriesLoaded;
+            	try {
+	                Location signLocation = Locations.parseLocation(plugin.getServer(), (String) entry.getKey());
+	                Location chestLocation = Locations.parseLocation(plugin.getServer(), (String) entry.getValue());
+	                setChestLocation(signLocation, chestLocation);
+	                ++entriesLoaded;
+            	} catch (IllegalArgumentException e) {
+            		log.warning("Could not load chest link, " + e.getMessage() + "!");
+            	}
             }
 
             log.info("Loaded " + entriesLoaded + " chest link(s).");
@@ -120,10 +143,10 @@ public class ChestLinkManager {
             Properties properties = new Properties();
 
             // Serialize each entry and add it to the properties object
-            int entriesStored = 0;
+            //int entriesStored = 0;
             for (Map.Entry<Location, Location> entry : chestLocations.entrySet()) {
                 properties.setProperty(Locations.toString(entry.getKey()), Locations.toString(entry.getValue()));
-                ++entriesStored;
+                //++entriesStored;
             }
 
             // Write out the entries
@@ -133,7 +156,7 @@ public class ChestLinkManager {
                 out.close();
             }
 
-            log.info("Stored " + entriesStored + " chest link(s).");
+            //log.info("Stored " + entriesStored + " chest link(s).");
         } catch (IOException ex) {
             ex.printStackTrace();
             log.warning("Could not write chest link file. Any personal signs will need to be reconnected.");

@@ -3,11 +3,15 @@ package tk.allele.duckshop.listeners;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
+import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.InventoryHolder;
+
 import tk.allele.duckshop.DuckShop;
 import tk.allele.duckshop.errors.*;
 import tk.allele.duckshop.signs.TradingSign;
@@ -32,7 +36,7 @@ public class DuckShopPlayerListener implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
@@ -45,6 +49,10 @@ public class DuckShopPlayerListener implements Listener {
                     if (useSign(player, block, (Sign) state)) {
                         event.setCancelled(true);
                     }
+                }
+                if (state instanceof Chest)
+                {
+                	
                 }
                 break;
 
@@ -60,7 +68,19 @@ public class DuckShopPlayerListener implements Listener {
                     }
                 }
                 break;
+		default:
+			break;
         }
+    }
+    
+    @EventHandler(ignoreCancelled = true)
+    public void onInventoryOpen(InventoryOpenEvent e)
+    {
+    	InventoryHolder i = e.getInventory().getHolder();
+    	if (i instanceof Chest || i instanceof DoubleChest)
+    	{
+    		
+    	}
     }
 
     /**

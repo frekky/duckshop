@@ -12,12 +12,17 @@ import java.util.*;
  */
 public abstract class Item implements Serializable {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -986589858900837223L;
+
+	/**
      * The set of words that mean "nothing".
      * <p>
      * <b>Implementation note</b>: We use a LinkedHashSet here because
      * {@code Money.toString()} depends on the ordering of the aliases.
      */
-    protected static final Set<String> nothingAliases = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList("nothing", "free")));
+    protected static final Set<String> nothingAliases = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList("nothing", "free", "donations")));
 
     private final String itemString;
 

@@ -6,7 +6,11 @@ import org.bukkit.entity.Player;
  * Thrown to indicate someone doesn't have permission to do something.
  */
 public class PermissionsException extends Exception {
-    private final Player player;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6137380450702655431L;
+	private final Player player;
     private final String permission;
 
     public PermissionsException(Player player, String permission) {

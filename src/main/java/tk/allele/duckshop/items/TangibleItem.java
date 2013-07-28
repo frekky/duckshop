@@ -16,6 +16,10 @@ import java.util.regex.Pattern;
  */
 public class TangibleItem extends Item {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3824215631903350050L;
+	/**
      * The format for a tangible item: the amount as an integer, then a
      * space, then the item name, then an optional durability value.
      */

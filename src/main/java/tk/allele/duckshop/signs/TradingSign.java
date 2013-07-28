@@ -15,14 +15,14 @@ import tk.allele.util.StringTools;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 /**
  * Represents a sign that can be used as a shop.
  */
 public class TradingSign {
     private DuckShop plugin;
-    private Logger log;
+    //private Logger log;
     private String ownerName;
     private Location signLocation;
     private boolean global;
@@ -70,7 +70,7 @@ public class TradingSign {
     private void initialize(DuckShop plugin, @Nullable Player placingPlayer, Location signLocation, String[] lines)
             throws InvalidSyntaxException {
         this.plugin = plugin;
-        this.log = plugin.log;
+        //this.log = plugin.log;
         this.signLocation = signLocation;
 
         // Trim whitespace
@@ -273,5 +273,10 @@ public class TradingSign {
     public void destroy(Player breakingPlayer) throws PermissionsException {
         plugin.permissions.throwIfCannot(breakingPlayer, "break." + getActionType(breakingPlayer));
         ChestLinkManager.getInstance(plugin).removeChestLocation(signLocation);
+    }
+    
+    public Location getSignLocation()
+    {
+    	return this.signLocation;
     }
 }

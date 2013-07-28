@@ -12,6 +12,11 @@ import java.util.regex.Pattern;
  */
 public class Money extends Item {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4584614856143319254L;
+
+	/**
      * The format for money: a dollar sign, then a floating point number.
      */
     private static final Pattern moneyPattern = Pattern.compile("\\$((\\d*\\.)?\\d+)");

@@ -80,7 +80,10 @@ public class DuckShop extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
-        return commandListener.onCommand(sender, command, commandLabel, args);
+        if (args.length != 0)
+        {
+        	return commandListener.onCommand(sender, command, commandLabel, args);
+        } else return false;
     }
 
     @Override
